@@ -1,0 +1,19 @@
+n = (int(input()))
+ropeweight =[]
+maxwieght = 0
+
+for i in range(n):
+    s=int(input()) #파이썬에서는 입력받을때 입력받는 값의 자료형을 선언 필요
+    ropeweight.append(s)
+
+ropeweight.sort()
+for i in range (int(n)):
+
+    weight = (ropeweight[i]) * (n-i)
+
+    if int(weight) > int(maxwieght):
+        maxwieght = weight
+
+print(maxwieght)
+
+ 
