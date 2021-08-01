@@ -1,0 +1,27 @@
+# 리스트 수 n 입력 , 연속된 부분리스트 값의 합 m 입력
+n, m = map(int, input().split())
+
+# 리스트의 들어가는 각 인덱스 값 입력
+arr = list(map(int, input().split()))
+
+
+def solution(n,m,arr):
+    start = 0
+    end = 0
+    sum = 0
+    cl_sum=m #연속된 부분 리스트 합
+    count = 0 #연속된 부분리스트의 합이 m일때 마다 count
+    for i in range(n):
+        while sum < cl_sum and end < n:
+            sum +=arr[end]
+            end +=1
+
+        if sum == cl_sum:
+            count+=1
+
+        sum -= arr[start]
+        start += 1
+
+    return count
+
+print(solution(n,m,arr))
