@@ -1,54 +1,57 @@
 numbers = [2, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5]
 hand = "left"
+
 def solution(numbers, hand):
-    result=""
-    l_key = [1, 4, 7]
-    R_key = [3, 6, 9]
-    position_hand = ['*', '#']
-    pad_position = {1: (0, 0), 2: (0, 1), 3: (0, 2),
-                    4: (1, 0), 5: (1, 1), 6: (1, 2),
-                    7: (2, 0), 8: (2, 1), 9: (2, 2),
-                    '*': (3,0), 0: (3,1), '#': (3,2),}
-
-        #numbers 인덱스값 i 증가 시키며 전부 순회
+    result = ""
+    l_key = [1,4,7] # 1,4,7 번호 리스트
+    R_key = [3,6,9] # 3,6,9 번호 리스트
+    position_hand = ['*','#'] # 초기 왼쪽손가락 위치 *, 오른쪽손가락 위치 #
+    position_keypad = {1:(0,0),2:(0,1),3:(0,2),
+                       4:(1,0),5:(1,1),6:(1,2),
+                       7:(2,0),8:(2,1),9:(2,2),
+                       "*":(3,0),0:(3,1),"#":(3,2)}
     for i in numbers:
-
         if i in l_key:
             result+="L"
-            position_hand[0]=i # 왼쪽 손가락을 해당 번호로 이동
+            position_hand[0]=i   # 왼쪽 손가락을 해당 번호로 이동
 
         elif i in R_key:
-            result += "R"
-            position_hand[1] =i #오른쪽 손가락을 해당 번호로 이동
+            result+="R"
+            position_hand[1]=i   # 오른쪽 손가락을 해당 번호로 이동
 
         else:
-            #2,5,8,0 번호에 더 가까운 손가락으로 해당 번호로 이동로직
-            near_hand = get_near_hand(position_hand[0], position_hand[1],pad_position,hand,i)
-            if near_hand == "L":
+            # 2,5,8,0 번호에 더 가까운 손가락으로 해당 번호로 이동 함수 호출
+            near_hand=find_near_hand(position_hand[0],position_hand[1],position_keypad,hand,i)
+
+            if near_hand =="L":
                 result+="L"
-                position_hand[0] = i
+                position_hand[0]=i  # 왼쪽 손가락을 해당 번호로 이동
+
             else:
-                result += "R"
-                position_hand[1] = i
+                result+="R"
+                position_hand[1]=i # 오른쪽 손가락을 해당 번호로 이동
+
+
+
     return result
 
-def get_near_hand(l, r, pad_position, hand, i):
-    #왼 손가락을 사용하 현재번호에서 원하는 번호로 이동하는 거리
-    lefthand_distance = abs(pad_position[l][0] - pad_position[i][0]) + abs(pad_position[l][1] - pad_position[i][1])
+    # 2,5,8,0 번호에 더 가까운 손가락으로 해당 번호로 이동 함수
+def find_near_hand(l,r,keypad,hand,i):
+    # 왼쪽손가락을 사용하여 현재번호에서 원하는 번호로 이동하는 거리
+    L_hand_distance=abs(keypad[l][0]-keypad[i][0]) + abs(keypad[l][1]-keypad[i][1])
 
-    #오른쪽 손가락을 사용하 현재번호에서 원하는 번호로 이동하는 거리
-    righthand_distance = abs(pad_position[r][0] - pad_position[i][0]) + abs(pad_position[r][1] - pad_position[i][1])
+    # 오른쪽 손가락을 사용하여 현재번호에서 원하는 번호로 이동하는 거리
+    R_hand_distance=abs(keypad[r][0]-keypad[i][0]) + abs(keypad[r][1]-keypad[i][1])
 
-    #두 거리가 같은 경우 왼쪽 손가락을 사용중이었다면 L 아니면 R
-    if lefthand_distance == righthand_distance:
-        near_hand = "L" if hand == "left" else "R"
+    # 두 거리가 같은 경우 왼쪽 손가락을 사용중이었다면 L 아니면 R
+    if L_hand_distance == R_hand_distance:
+        near_hand="L" if hand=="left" else "R"
+
+    # 왼쪽 손가락을 사용하 현재번호에서 원하는 번호로 이동하는 거리가 더 작다면 L(왼쪽 손가락 사용) 아니면 R(오른쪽 손가락 사용)
     else:
-    #왼쪽 손가락을 사용하 현재번호에서 원하는 번호로 이동하는 거리가 더 작다면 왼쪽 손가락 사용 아니면 오른쪽 손가락 사용
-        near_hand="L" if lefthand_distance < righthand_distance else "R"
+        near_hand="L" if L_hand_distance<R_hand_distance else "R"
+
     return near_hand
 
 
-
-
-
-print(solution(numbers, hand))
+print(solution(numbers,hand))
