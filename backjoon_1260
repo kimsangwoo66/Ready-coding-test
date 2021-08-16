@@ -1,0 +1,35 @@
+from collections import deque
+N,M,V = map(int, input().split())
+graph = [[0]*(N+1) for i in range(N+1)] #0번 노드부터 N번째 노드까지 생성
+visted1=[0]*(N+1) # 0에서 N번쨰 인덱스 까지 dfs 방문처리 리스트 생성
+visted2=[0]*(N+1) # 0에서 N번쨰 인덱스 까지 bfs 방문처리 리스트 생성
+
+for i in range(M):
+    a, b = map(int, input().split())
+    graph[a][b]=graph[b][a]=1 #간선으로 연결된 두 노드를 인접행렬로 재정의
+
+
+def dfs(V):
+    visted1[V]=1 # 해당 노드 방문처리
+    print(V, end=" ")
+    for i in range(len(visted1)):
+        if visted1[i] == 0 and graph[V][i]== 1:# 인접노드에 방문처리가 되어있지 않고 간선으로 연결되어있는 경우
+            dfs(i)
+
+
+
+def bfs(V):
+    visted2[V]=1 #해당 노드 방문처리 
+    q=deque()
+    q.append(V)
+    while q:
+        V=q.popleft()
+        print(V, end=" ")
+        for i in range(len(visted2)):
+            if visted2[i] == 0 and graph[V][i] ==1: # 인접노드에 방문처리가 되어있지 않고 간선으로 연결되어있는 경우
+                q.append(i)
+                visted2[i] = 1
+
+dfs(V)
+print()
+bfs(V)
