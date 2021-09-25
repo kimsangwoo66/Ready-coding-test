@@ -4,34 +4,35 @@ import java.util.Scanner;
 
 public class BinarySearch2
 {
-    public static int BS(int arr[], int target, int start, int end)
+    public static int BS(int []arr, int target, int start, int end)
     {
-        while (start<=end)
+        if(start>end)
         {
-            int mid = (start + end) / 2;
-            if(arr[mid]==target)
-            {
-                return mid;
-            }
-            else if(arr[mid]>target)
-            {
-                end = mid-1;
-            }
-            else {
-                start = mid + 1;
-            }
+            return -1;
         }
-        return -1;
+        int mid = (start + end) / 2;
 
+        if(arr[mid] == target)
+        {
+            return mid;
+        }
+        else if(arr[mid] > target)
+        {
+            return BS(arr, target, start, mid-1);
+        }
+
+        else
+        {
+            return BS(arr, target, mid+1, end);
+        }
     }
 
-    public static void main(String args[])
-    {
+    public static void main(String args[]){
         Scanner sc = new Scanner(System.in);
-        int n =sc.nextInt();
+        int n = sc.nextInt();
         int target = sc.nextInt();
 
-        int []arr = new int[n];
+        int [] arr = new int[n];
 
         for(int i=0;i<n;i++)
         {
@@ -40,14 +41,13 @@ public class BinarySearch2
 
         int result = BS(arr, target, 0, n-1);
 
-        if(result==-1)
+        if(result == -1)
         {
-            System.out.println("타겟값이 없습니다.");
+            System.out.println("타겟값이 존재 하지 않습니다.");
         }
-        else{
+        else
+        {
             System.out.println("타겟의 위치는 " + (result+1));
         }
-
-
     }
 }
