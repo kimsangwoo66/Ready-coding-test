@@ -71,6 +71,10 @@ public class FindItem {
             }
 
 
+
+        }
+        for (int i1 : requestItem) {
+            System.out.println(i1);
         }
 
     }
