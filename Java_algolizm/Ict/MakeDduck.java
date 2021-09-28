@@ -1,4 +1,4 @@
-package Java_algolizm;
+package Java_algolizm.Ict;
 
 import java.util.Arrays;
 import java.util.Scanner;
