@@ -9,7 +9,7 @@ public class FiboBU {
     {
         d[1]=1;
         d[2]=1;
-        int n=4;
+        int n=3;
         for(int i=3;i<=n;i++)
         {
 
